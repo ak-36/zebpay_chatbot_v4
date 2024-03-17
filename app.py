@@ -31,11 +31,13 @@ def load_data():
          docs = reader.load_data()
          llm=OpenAI(model="gpt-4", temperature=0.1)
          embed_model = HuggingFaceEmbedding(model_name="BAAI/bge-base-en-v1.5")
+         print("Emdedding Model Loaded")
          Settings.llm = llm
          Settings.embed_model = embed_model
          Settings.chunk_size = 512
          # index = VectorStoreIndex.from_documents(docs, service_context=service_context)
          index = VectorStoreIndex.from_documents(docs)
+         print("Index Created")
          return index
       
 index = load_data()
@@ -81,7 +83,7 @@ You can raise a support ticket by visiting our help center at [help.zebpay.com](
 
 Human: {{QUESTION}}
 Assistant: <answer>""", similarity_top_k=3)
-
+print("Chat Engine Created")
 @st.cache_resource(show_spinner=False)
 def get_crypto_price(user_input: str)->str:
     price = "$1000"
@@ -96,8 +98,10 @@ def fn_chat_engine(user_input: str) -> str:
   
 chat_tool = FunctionTool.from_defaults(fn=fn_chat_engine)
 price_tool = FunctionTool.from_defaults(fn=get_crypto_price)
-if "chat_engine" not in st.session_state.keys():
+if "agent" not in st.session_state.keys():
   st.session_state.agent = OpenAIAgent.from_tools([price_tool, chat_tool], llm=llm, verbose=True)
+
+print("AI Agent Created")
 
 if prompt := st.chat_input("Your question"): # Prompt for user input and save to chat history
     st.session_state.messages.append({"role": "user", "content": prompt})
