@@ -27,7 +27,7 @@ if "messages" not in st.session_state.keys(): # Initialize the chat messages his
 @st.cache_resource(show_spinner=False)
 def load_data():
     with st.spinner(text="Loading and indexing the Streamlit docs – hang tight! This should take 1-2 minutes."):
-         reader = SimpleDirectoryReader(input_files=["1.docx", "2.docx", "3.docx", "chat_history.docx", "4.docx"], recursive=True)
+         reader = SimpleDirectoryReader(input_files=["1.docx", "2.docx", "3.docx", "chat_history.docx"], recursive=True)
          docs = reader.load_data()
          llm=OpenAI(model="gpt-4", temperature=0.1)
          embed_model = HuggingFaceEmbedding(model_name="BAAI/bge-base-en-v1.5")
