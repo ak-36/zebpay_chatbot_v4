@@ -86,7 +86,7 @@ Assistant: <answer>""", similarity_top_k=3)
 def get_crypto_price(user_input: str)->str:
     price = "$1000"
     user_input = f"Latest Price of Cryptocurrency is- {price}" + user_input
-    response = st.session_state.chat_engine.chat.(user_input)
+    response = st.session_state.chat_engine.chat(user_input)
     return str(response)
 
 @st.cache_resource(show_spinner=False)
