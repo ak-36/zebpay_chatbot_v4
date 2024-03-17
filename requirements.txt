@@ -1,0 +1,7 @@
+docx2txt
+llama-index
+llama-index-embeddings-huggingface
+llama-index-llms-anthropic
+openai
+streamlit
+nltk
